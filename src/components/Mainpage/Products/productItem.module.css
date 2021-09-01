@@ -1,0 +1,9 @@
+.items{
+    display: block;
+}
+.items td{
+    display: inline;
+    color: rgb(245, 243, 243);
+    list-style: none;
+     padding: 20px;
+}

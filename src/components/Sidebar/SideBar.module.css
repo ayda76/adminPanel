@@ -1,0 +1,27 @@
+.SideBar{
+    background-color: rgb(43, 43, 43);
+    height: 100vh;
+   position: fixed;
+   padding: 20px;
+
+ 
+}
+.SideBar.menubuttons {
+    display: block;
+}
+
+.menubuttons button{ 
+    background-color: rgb(43, 43, 43);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 150px;
+    border-radius: 20px;
+    border: 1px solid white;
+color: white;
+margin-top: 20px;
+}
+
+@media only screen and (max-width: 970px){
+
+  
+}

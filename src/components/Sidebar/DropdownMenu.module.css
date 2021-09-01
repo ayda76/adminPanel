@@ -1,0 +1,15 @@
+.dropdown{
+    width: 50vw;
+    padding: 10px;
+    border-radius: 20px;
+    background-color: rgb(54, 53, 53);
+color: honeydew;
+border: 1px solid white;
+text-align: center;
+margin-top: 10px;
+margin-bottom: 10px;
+}
+.dropdown option{
+    background-color: rgb(54, 53, 53);
+    color: honeydew;
+}

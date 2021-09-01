@@ -1,0 +1,19 @@
+
+.container-fluid{
+  background-color: black;
+  height: 100vh;
+}
+h1{
+  color: white;
+  margin-top: 100px;
+  margin-left: -50px;
+}
+
+.dropdown{
+  background-color: rgb(54, 53, 53);
+  padding-top: 10px;
+}
+@media only screen and (max-width: 970px){
+
+  
+}
