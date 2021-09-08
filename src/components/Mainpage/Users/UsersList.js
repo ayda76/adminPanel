@@ -1,15 +1,86 @@
 
-import React ,{useState,useEffect,useContext}from 'react'
+import React ,{useState,useEffect,useContext, useCallback}from 'react'
 import styles from './UserList.module.css';
 import UserItem from './UserItem';
 import '../../../../node_modules/bootstrap/dist/css/bootstrap.min.css'
-import ContextUsers from '../../../store/Users/context-users';
+//import ContextUsers from '../../../store/Users/context-users';
+import useHttp from '../../../custom-hooks/use-http';
 function UsersList() {
    
-     const ctxUsers=useContext(ContextUsers);
+   //  const ctxUsers=useContext(ContextUsers);
  const [users, setUsers] = useState([]);
  const [error,setError]=useState(null);
- 
+const {requestHttp:fetchData,newData}=useHttp();
+let newUsers=[];
+console.log("show me new data",newData)
+
+
+
+/*
+const transformData =(data)=>{
+       
+    for (const key in data){
+        newUsers.push({
+            id:Math.random(),
+            name:data[key].name,
+            email:data[key].email,
+            username:data[key].username,
+            password:data[key].password
+        })
+        console.log("in the for",newUsers)
+    }  
+setUsers(newUsers);
+console.log("this is length",newUsers.length)
+console.log(newUsers)
+}*/
+/*
+const transformData =useCallback(()=>{
+
+   
+    for (const key in newData){
+        newUsers.push({
+            id:Math.random(),
+            name:newData[key].name,
+            email:newData[key].email,
+            username:newData[key].username,
+            password:newData[key].password
+        })
+      
+    }  
+    setUsers(newUsers);
+
+console.log("this is length",newUsers.length)
+console.log(newUsers)
+},[]);
+*/
+
+    
+const transformData =()=>{
+    for (const key in newData){
+        newUsers.push({
+            id:Math.random(),
+            name:newData[key].name,
+            email:newData[key].email,
+            username:newData[key].username,
+            password:newData[key].password
+        })
+      
+    }  
+    setUsers(newUsers);
+
+console.log("this is length",newUsers.length)
+console.log(newUsers)
+}
+
+useEffect(() => {
+
+ fetchData({url:'https://onlineshopping-b2ab4-default-rtdb.firebaseio.com/users.json'},transformData);
+
+
+
+ },[]);
+
+ /*
 
 let xxx=[];
  
@@ -27,15 +98,7 @@ useEffect(() => {
  
  },[ctxUsers.items]);
 
-/*
- useEffect(() => {
-  
-        fetchingUsers();
 
-   
- 
- },[fetchingUsers]);
-*/
  //fetching products
  async function fetchingUsers(){
 
@@ -70,6 +133,7 @@ useEffect(() => {
      } 
 
      console.log("this is xxx:",xxx)
+     */
  
    const Items=users.map((item)=>
          <UserItem 

@@ -1,9 +1,12 @@
 import React,{useState,useContext} from 'react'
 import styles from './UserForm.module.css';
 import '../../../../node_modules/bootstrap/dist/css/bootstrap.min.css'
-import ContextUsers from '../../../store/Users/context-users';
+//import ContextUsers from '../../../store/Users/context-users';
+import useHttp from '../../../custom-hooks/use-http';
+import UsersList from './UsersList';
 function UserForm() {
-   const ctxUser= useContext(ContextUsers);
+    const {requestHttp:fetchData}=useHttp();
+  // const ctxUser= useContext(ContextUsers);
 const [newUser, setUser] = useState({
     name:'',
     email:'',
@@ -33,11 +36,29 @@ const passwordUserChangeHandler=(event)=>{
     })
 }
 
-const submitHandler=(event)=>{
+
+//const  createuser = ()=>{
+ //   const user={name:newUser.name,email:newUser.email,username:newUser.username,password:newUser.password}
+//}
+
+
+ 
+const submitHandler=async(event)=>{
 
 event.preventDefault();
-    ctxUser.onADD(newUser);
+fetchData({url:'https://onlineshopping-b2ab4-default-rtdb.firebaseio.com/users.json',
+method:'POST',
+body:newUser,
+headers:{
+    'Content-Type':'application/json'
+  }
+},()=>{})
+ //   ctxUser.onADD(newUser); createuser.bind(null,newUser)
 }
+
+
+
+
     return (
     
            <form className={`col-12 ${styles.form}`} onSubmit={submitHandler}>

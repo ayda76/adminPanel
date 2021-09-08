@@ -1,14 +1,43 @@
 import React ,{useEffect,useState,useContext}from 'react'
 import styles from './productList.module.css';
-import ContextProducts from '../../../store/Products/context-products';
+///import ContextProducts from '../../../store/Products/context-products';
 import ProductItem from './ProductItem';
 import '../../../../node_modules/bootstrap/dist/css/bootstrap.min.css'
+import useHttp from '../../../custom-hooks/use-http';
 function ProductsList() {
-  const ctxProduct = useContext(ContextProducts);
+   
+  ///const ctxProduct = useContext(ContextProducts);
     
 const [products, setProducts] = useState([]);
-const [error,setError]=useState(null);
+//const [error,setError]=useState(null);
+const {  requestHttp:fetchData}=useHttp();
 
+
+useEffect(()=>{
+
+    const transformData=(data)=>{
+        const newProducts=[];
+        for (const key in data){
+            newProducts.push({
+                id:Math.random(),
+                name:data[key].name,
+                price:data[key].price,
+                color:data[key].color,
+                werehouse:data[key].werehouse
+            })
+        }
+       // console.log("products",newProducts)
+        
+        setProducts(newProducts);
+    }
+    
+    fetchData(
+        {url:'https://onlineshopping-b2ab4-default-rtdb.firebaseio.com/products.json'}
+        ,transformData)
+    
+},[fetchData])
+
+/*
 let xxx=[]
 useEffect(()=>{
     if(ctxProduct.items.length>0){
@@ -55,7 +84,7 @@ async function fetchingProducts(){
      
     } 
 
-
+*/
 
   const Items=products.map((item)=>
         <ProductItem 

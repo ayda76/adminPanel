@@ -1,9 +1,11 @@
 import React,{useState,useContext} from 'react'
 import styles from './productForm.module.css';
 import '../../../../node_modules/bootstrap/dist/css/bootstrap.min.css'
-import ContextProducts from '../../../store/Products/context-products';
+//import ContextProducts from '../../../store/Products/context-products';
+import useHttp from '../../../custom-hooks/use-http';
 function ProductForm() {
-   const ctxProduct= useContext(ContextProducts);
+   const {requestHttp:fetchData}= useHttp();
+ //  const ctxProduct= useContext(ContextProducts);
 const [newProduct, setProduct] = useState({
     name:'',
     price:'',
@@ -36,9 +38,14 @@ const werehouseProductChangeHandler=(event)=>{
 const submitHandler=(event)=>{
 
 event.preventDefault();
-console.log(newProduct);
-console.log(ctxProduct);
-    ctxProduct.onADD(newProduct);
+fetchData({url:'https://onlineshopping-b2ab4-default-rtdb.firebaseio.com/products.json',
+method:'POST',
+body:newProduct,
+headers:{
+    'Content-Type':'application/json'
+  }
+},()=>{});
+   // ctxProduct.onADD(newProduct);
 }
     return (
        <React.Fragment>
