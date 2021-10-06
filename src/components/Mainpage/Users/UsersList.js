@@ -5,7 +5,7 @@ import "../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 import useHttp from "../../../custom-hooks/use-http";
 
-function UsersList() {
+function UsersList(props) {
   const [users, setUsers] = useState([]);
   const { requestHttp: fetchData } = useHttp();
   
@@ -36,7 +36,7 @@ let newUsers = [];
       },
       transformData
     );
-  }, [newUsers]);
+  }, [props.newUser]);
 
   const Items = users.map((item) => (
     <UserItem

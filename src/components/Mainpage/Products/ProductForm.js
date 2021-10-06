@@ -9,7 +9,8 @@ function ProductForm(props) {
 const [newProduct, setProduct] = useState({
     name:'',
     price:'',
-    color:'',
+    type:'',
+    image:'',
     werehouse:0
 
 })
@@ -24,9 +25,9 @@ const priceProductChangeHandler=(event)=>{
         return {...prev ,price:event.target.value}
     })
 }
-const colorProductChangeHandler=(event)=>{
+const typeProductChangeHandler=(event)=>{
     setProduct((prev)=>{
-        return {...prev ,color:event.target.value}
+        return {...prev ,type:event.target.value}
     })
 }
 const werehouseProductChangeHandler=(event)=>{
@@ -34,7 +35,13 @@ const werehouseProductChangeHandler=(event)=>{
         return {...prev ,werehouse:event.target.value}
     })
 }
-
+const imageProductChangeHandler=(event)=>{
+    setProduct((prev)=>{
+       const imgUrl= event.target.value;
+      const img= imgUrl.slice(12);
+        return {...prev ,image:img}
+    })
+}
 const sendNewProduct=()=>{
 props.onAdd(newProduct);
 }
@@ -53,7 +60,7 @@ body:newProduct
 }
     return (
        <React.Fragment>
-           <form className={`col-12 ${styles.form}`} onSubmit={submitHandler}>
+           <form className={`col-12 ${styles.form}`} onSubmit={submitHandler} method="POST"  encType="multipart/form-data">
                <h1 >ADD Your Products:)</h1>
                <div className={styles.inputform}>
                
@@ -67,9 +74,13 @@ body:newProduct
                
                <div className={styles.inputform}>
               
-               <input type="text" onChange={colorProductChangeHandler} placeholder="color"/>
+               <input type="text" onChange={typeProductChangeHandler} placeholder="type"/>
                </div>
               
+               <div className={styles.inputform}>
+              
+              <input type="file" onChange={imageProductChangeHandler} placeholder="image"/>
+              </div>
                <div className={styles.inputform}>
              
                <input  type="number" min="0" onChange={werehouseProductChangeHandler} placeholder="werehouse amount"/>

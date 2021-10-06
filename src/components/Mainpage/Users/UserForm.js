@@ -3,8 +3,8 @@ import styles from "./UserForm.module.css";
 import "../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 //import ContextUsers from '../../../store/Users/context-users';
 import useHttp from "../../../custom-hooks/use-http";
-import UsersList from "./UsersList";
-function UserForm() {
+
+function UserForm(props) {
   const { requestHttp: fetchData } = useHttp();
   // const ctxUser= useContext(ContextUsers);
   const [newUser, setUser] = useState({
@@ -39,7 +39,9 @@ function UserForm() {
   //   const user={name:newUser.name,email:newUser.email,username:newUser.username,password:newUser.password}
   //}
 
-
+  const sendNewUser=()=>{
+    props.onAdd(newUser);
+    }
   const submitHandler = async (event) => {
     event.preventDefault();
     fetchData(
@@ -51,7 +53,7 @@ function UserForm() {
         },
         body: newUser,
       },
-      () => {}
+      sendNewUser
     );
     //   ctxUser.onADD(newUser); createuser.bind(null,newUser)
   };
