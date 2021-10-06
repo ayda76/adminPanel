@@ -1,19 +1,20 @@
 import React,{useState,useCallback} from 'react'
 
-const useHttp=()=> {
+const useHttp = () => {
    
     const [error,setError]=useState(null);
-const [newData,setNewData]=useState([]);
-const [list,setList]=useState([]);
-let   listItems=[];
+//const [newData,setNewData]=useState([]);
+//const [list,setList]=useState([]);
+//let   listItems=[];
    
- const requestHttp = useCallback( async (requestConfig,compFunction)=>{
-    
+ const requestHttp = useCallback(async(requestConfig,compFunction)=>{
+    setError(null);
         try{
             const response=await fetch(requestConfig.url,{
-                method:requestConfig.method ? requestConfig.method: 'GET' ,
-                body:JSON.stringify(requestConfig.body) ? JSON.stringify(requestConfig.body):null,
-                headers:requestConfig.headers ? requestConfig.headers:{}
+                method:requestConfig.method ? requestConfig.method:'GET' ,
+               headers:requestConfig.headers ? requestConfig.headers:{},
+               body:JSON.stringify(requestConfig.body) ? JSON.stringify(requestConfig.body):null
+               
             })
             
             if(!response.ok){
@@ -22,8 +23,8 @@ let   listItems=[];
     
             const data= await response.json();
            
-          compFunction();
-          setNewData(data);
+          compFunction(data);
+         // setNewData(data);
 
           // console.log("list items",listItems);
            
@@ -35,10 +36,7 @@ let   listItems=[];
     },[]);
 
   //  console.log("list items out",listItems);
-return {  requestHttp ,
-    newData
-   
-}
+return {  requestHttp}
 
 }
 

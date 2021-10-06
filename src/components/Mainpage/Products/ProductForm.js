@@ -3,8 +3,8 @@ import styles from './productForm.module.css';
 import '../../../../node_modules/bootstrap/dist/css/bootstrap.min.css'
 //import ContextProducts from '../../../store/Products/context-products';
 import useHttp from '../../../custom-hooks/use-http';
-function ProductForm() {
-   const {requestHttp:fetchData}= useHttp();
+function ProductForm(props) {
+   
  //  const ctxProduct= useContext(ContextProducts);
 const [newProduct, setProduct] = useState({
     name:'',
@@ -13,7 +13,7 @@ const [newProduct, setProduct] = useState({
     werehouse:0
 
 })
-
+const {requestHttp:fetchData}= useHttp();
 const nameProductChangeHandler=(event)=>{
     setProduct((prev)=>{
         return {...prev ,name:event.target.value}
@@ -35,16 +35,20 @@ const werehouseProductChangeHandler=(event)=>{
     })
 }
 
-const submitHandler=(event)=>{
+const sendNewProduct=()=>{
+props.onAdd(newProduct);
+}
+const submitHandler= async(event)=>{
 
 event.preventDefault();
-fetchData({url:'https://onlineshopping-b2ab4-default-rtdb.firebaseio.com/products.json',
+fetchData({url:'https://test-a7043-default-rtdb.firebaseio.com/products.json',
 method:'POST',
-body:newProduct,
 headers:{
     'Content-Type':'application/json'
-  }
-},()=>{});
+  },
+body:newProduct
+
+},sendNewProduct);
    // ctxProduct.onADD(newProduct);
 }
     return (
